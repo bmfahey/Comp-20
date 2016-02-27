@@ -1,0 +1,22 @@
+p {
+	text-align: center;
+	font-size: 24px;
+}
+
+h1 {
+	text-align: center;
+}
+
+img {
+	width: 25%;
+	height: 25%;
+}
+
+#music_video {
+	display: block;
+	margin: 0 auto;
+}
+
+body {
+	background-color: gray;
+}
