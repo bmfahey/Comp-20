@@ -1,1 +1,10 @@
-/* Your CSS here... */
+p {
+	font-family:Courier;
+	font-size:24px;
+}
+
+#background {
+	background-color:#6392bf;
+	border-radius: 25px;
+	color: white;
+}
