@@ -9,8 +9,11 @@
 	<script>
 		var myLat = 0;
 		var myLng = 0;
-		var request = new XMLHttpRequest();
+		var xmlReq = new XMLHttpRequest();
 		var me = new google.maps.LatLng(myLat, myLng);
+		var raw = "";
+		var locationData;
+		var personMarkers = {};
 		var myOptions = {
 			zoom: 15, // The larger the zoom number, the bigger the zoom
 			center: me,
@@ -19,7 +22,8 @@
 		var map;
 		var marker;
 		var infowindow = new google.maps.InfoWindow();
-			
+		var index = 0;
+
 		function init()
 		{
 			map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
@@ -32,11 +36,26 @@
 					myLat = position.coords.latitude;
 					myLng = position.coords.longitude;
 					renderMap();
+					sendLocation(myLat, myLng);
 				});
 			}
 			else {
 				alert("Geolocation is not supported by your web browser.  What a shame!");
 			}
+		}
+
+		function sendLocation (myLat, myLng) {
+			xmlReq.open("POST", "https://defense-in-derpth.herokuapp.com/sendLocation",true);
+			xmlReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xmlReq.onreadystatechange = function() {
+    			if(xmlReq.readyState == 4 && xmlReq.status == 200) {
+        			raw = xmlReq.responseText;
+        			locationData = JSON.parse(raw);
+        			addMarkers();
+    			}
+			}
+			xmlReq.send("login=ELOISE_DELACRUZ&lat="+myLat+"&lng="+myLng);
+
 		}
 
 		function renderMap()
@@ -58,6 +77,49 @@
 				infowindow.setContent(marker.title);
 				infowindow.open(map, marker);
 			});
+		}
+
+		function addMarkers() {
+			for (i = 0; i < locationData.people.length; i++){
+				markPerson(locationData.people[i]);
+			}
+			for (i = 0; i < locationData.landmarks.length; i++) {
+				markLandmark(locationData.lanndmarks[i]);
+			}
+		}
+
+		function markPerson (person) {
+			var personIcon = {
+				url: "./images/stick_figure.jpg",
+				scaledSize: new google.maps.Size(50,50)
+			};
+			personMarkers[index] = new google.maps.Marker({
+				position: new google.maps.LatLng(person.lat, person.lng),
+				title: person.login,
+				icon: personIcon
+			});
+			personMarkers[index].setMap(map);
+			google.maps.event.addListener(personMarkers[index], 'click', function(e) {
+				i = search(personMarkers, index, e.latLng);
+				infowindow.setContent(personMarkers[i].title);
+				infowindow.open(map,personMarkers[i]);
+			});
+			index++;
+		}
+
+		function markLandmark (landmark) {
+			var landmarkIcon = {
+				//START HERE --> UNFINISHED
+			}
+		}
+
+		function search (list, len, ltlg) {
+			for (i = 0; i < len; i++) {
+				if (list[i].position.equals(ltlg)){
+					return i;
+				}
+			}
+			return 0;
 		}
 	</script>
 	<link rel = "stylesheet" href = "style.css" type = "text/css" />
