@@ -14,6 +14,8 @@
 		var raw = "";
 		var locationData;
 		var personMarkers = {};
+		var landMarkers = {};
+		var landMarkers
 		var myOptions = {
 			zoom: 15, // The larger the zoom number, the bigger the zoom
 			center: me,
@@ -22,7 +24,8 @@
 		var map;
 		var marker;
 		var infowindow = new google.maps.InfoWindow();
-		var index = 0;
+		var personIndex = 0;
+		var landIndex = 0;
 
 		function init()
 		{
@@ -84,7 +87,7 @@
 				markPerson(locationData.people[i]);
 			}
 			for (i = 0; i < locationData.landmarks.length; i++) {
-				markLandmark(locationData.lanndmarks[i]);
+				markLandmark(locationData.landmarks[i]);
 			}
 		}
 
@@ -93,24 +96,37 @@
 				url: "./images/stick_figure.jpg",
 				scaledSize: new google.maps.Size(50,50)
 			};
-			personMarkers[index] = new google.maps.Marker({
+			personMarkers[personIndex] = new google.maps.Marker({
 				position: new google.maps.LatLng(person.lat, person.lng),
 				title: person.login,
 				icon: personIcon
 			});
-			personMarkers[index].setMap(map);
-			google.maps.event.addListener(personMarkers[index], 'click', function(e) {
-				i = search(personMarkers, index, e.latLng);
+			personMarkers[personIndex].setMap(map);
+			google.maps.event.addListener(personMarkers[personIndex], 'click', function(e) {
+				i = search(personMarkers, personIndex, e.latLng);
 				infowindow.setContent(personMarkers[i].title);
 				infowindow.open(map,personMarkers[i]);
 			});
-			index++;
+			personIndex++;
 		}
 
 		function markLandmark (landmark) {
 			var landmarkIcon = {
-				//START HERE --> UNFINISHED
-			}
+				url: "./images/house.png",
+				scaledSize: new google.maps.Size(50,50)
+			};
+			landMarkers[landIndex] = new google.maps.Marker({
+					position: new google.maps.LatLng(landmark.geometry.coordinates[0], landmark.geometry.coordinates[1]),
+					title: landmark.properties.Location_Name,
+					icon: landmarkIcon
+			});
+			landMarkers[landIndex].setMap(map);
+			google.maps.event.addListener(landMarkers[landIndex], 'click', function(e) {
+				i = search(landMarkers, landIndex, e.latLng);
+				infowindow.setContent(locationData.landmarks[i].properties.Details);
+				infowindow.open(map, landMarkers[i]);
+			});
+			landIndex++;
 		}
 
 		function search (list, len, ltlg) {
