@@ -6,9 +6,24 @@
 	<title>Captain's Log</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 	<script>
-	  $('#msg').change(function() {
-	  	console.log("Working!");
-	  });
+	$(document).ready(function() {
+		total_log = "";
+		for (key in localStorage) {
+			total_log = "<p>" + localStorage[key] + "</p>" + total_log;
+		}
+		$("#log").html(total_log);
+	  	$("#msg").keyup(function(event) {
+	  		if (event.which == 13) {
+	  			text = $("#msg").val();
+	  			time_stamp = new Date();
+	  			message = time_stamp + " - " + text;
+	  			localStorage.setItem(time_stamp,message);
+	  			total_log = "<p>" + message + "</p>" + total_log;
+	  			$("#log").html(total_log);
+	  			$("#msg").val("");
+	  		}
+	  	});
+	});
 	</script>
 </head>
 
