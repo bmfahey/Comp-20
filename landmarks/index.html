@@ -36,9 +36,9 @@
 			map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 			getMyLocation();
 		}
-			
+
 		function getMyLocation() {
-			if (navigator.geolocation) { 
+			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position) {
 					myLat = position.coords.latitude;
 					myLng = position.coords.longitude;
@@ -52,23 +52,23 @@
 		}
 
 		function sendLocation (myLat, myLng) {
-			xmlReq.open("POST", "https://defense-in-derpth.herokuapp.com/sendLocation",true);
+			xmlReq.open("POST", "https://gentle-caverns-79275/sendLocation",true);
 			xmlReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xmlReq.onreadystatechange = function() {
     			if(xmlReq.readyState == 4 && xmlReq.status == 200) {
         			raw = xmlReq.responseText;
         			locationData = JSON.parse(raw);
+					console.log(locationData);
         			addMarkers();
     			}
 			}
 			xmlReq.send("login=ELOISE_DELACRUZ&lat="+myLat+"&lng="+myLng);
-
 		}
 
 		function renderMap()
 		{
 			me = new google.maps.LatLng(myLat, myLng);
-			
+
 			map.panTo(me);
 		}
 
@@ -195,22 +195,24 @@
    				return this * Math.PI / 180;
 			}
 
-			var lat2 = other.lat(); 
-			var lon2 = other.lng(); 
-			var lat1 = me.lat(); 
-			var lon1 = me.lng(); 
+			var lat2 = other.lat();
+			var lon2 = other.lng();
+			var lat1 = me.lat();
+			var lon1 = me.lng();
 
-			var R = 6371; // km 
+			var R = 6371; // km
 			//has a problem with the .toRad() method below.
 			var x1 = lat2-lat1;
-			var dLat = x1.toRad();  
+			var dLat = x1.toRad();
 			var x2 = lon2-lon1;
-			var dLon = x2.toRad();  
-			var a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
-                Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) * 
-                Math.sin(dLon/2) * Math.sin(dLon/2);  
-			var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+			var dLon = x2.toRad();
+			var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) *
+                Math.sin(dLon/2) * Math.sin(dLon/2);
+			var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 			var d = R * c;
+			//must convert to miles
+			d *= 0.621371;
 			return d;
 		}
 
