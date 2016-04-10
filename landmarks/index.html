@@ -52,7 +52,7 @@
 		}
 
 		function sendLocation (myLat, myLng) {
-			xmlReq.open("POST", "https://gentle-caverns-79275.herokuapp.com/sendLocation",true);
+			xmlReq.open("POST", "http://gentle-caverns-79275.herokuapp.com/sendLocation",true);
 			xmlReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xmlReq.onreadystatechange = function() {
     			if(xmlReq.readyState == 4 && xmlReq.status == 200) {
