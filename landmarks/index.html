@@ -57,9 +57,7 @@
 			xmlReq.onreadystatechange = function() {
     			if(xmlReq.readyState == 4 && xmlReq.status == 200) {
         			raw = xmlReq.responseText;
-					console.log(raw);
         			locationData = JSON.parse(raw);
-					console.log(locationData);
         			addMarkers();
     			}
 			}
