@@ -23,7 +23,7 @@
         have logged on and the nearest historical landmarks to the person
         currently logged on. There are also interfaces for getting all the
         logons for a certain user and for getting all logons of all the users
-        in the database. This product was written by Joe Kamibeppu in fulfillemt
+        in the database. This product was written by Joe Kamibeppu in fulfillment
         of Assignments 2 and 3 in COMP20 Spring 2016.
     </p>
     <p>
@@ -37,7 +37,7 @@
     <hr>
     <p>
         I tried to think of the security vulnerabilities before even looking at
-        the code provided to me. I did research about how to take advatnage of
+        the code provided to me. I did research about how to take advantage of
         vulnerabilities that I thought might exist, such as the syntax for greater
         than in MongoDB I tested my theories, and they worked. Then I
         looked at the code to determine exactly where the lines were that caused
@@ -64,7 +64,7 @@
         a command that will make the page display all the information from the
         other users, a privacy risk considering this information contains the
         location from which they last logged in. Finally, the last issue deals
-        with the way new users are handled. First of all, everytime a user submits
+        with the way new users are handled. First of all, every time a user submits
         data it is stored alongside the old data, instead of replacing it. Second,
         the database has a somewhat limited storage which could be completely filled
         in a malicious attack.
@@ -92,7 +92,7 @@
                 proof of concept shows one of the worst case-scenarios. Using a
                 simple (one-line) curl request, I was able to force the '/' route
                 to redirect to a website, Google. While redirecting to a search
-                engine is harmles, this proves that someone truly malicious could
+                engine is harmless, this proves that someone truly malicious could
                 do much more. Using redirection and a GET or POST request, an
                 attacker could redirect to another page and populate it to look
                 exactly like the page the user was on. However, the attacker's
@@ -306,7 +306,7 @@
         functionality, security, and privacy of the entire product can be improved.
         Currently, Cross-Site Scripting leaves the site open to attack, flaws
         in the database pose a risk to the privacy of all its users, and a somewhat
-        small databse can be filled up by a hacker, especially with the current implementation
+        small database can be filled up by a hacker, especially with the current implementation
         of the user storage system. By sanitizing input many of these risks would be
         avoided at no cost. The only fix that would require money is the larger
         database, which can be purchased for as little as $15 from Mongo, although
