@@ -1,0 +1,15 @@
+code {
+    background-color:beige;
+}
+
+.screenshot {
+    height:60%;
+    width:60%;
+    border-width:2px;
+    border-style:solid;
+    border-color:black;
+}
+
+body {
+    font-family: Georgia;
+}
