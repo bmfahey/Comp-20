@@ -24,5 +24,4 @@ Some basic security was also learned, including cross-site
 scripting, database injection, and more. 
 
 At the end of this class, a large website was created with a group
-of people. This website can be accessed at the repository titled:
-"not-so-jumbo".
+of peers. This website can be accessed at http://not-so-jumbo.herokuapp.com.
